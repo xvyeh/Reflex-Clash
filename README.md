@@ -1,4 +1,4 @@
-Markdown# 🎯 Reflex Clash: 1v1 Reaction Arena
+🎯 Reflex Clash: 1v1 Reaction Arena
 
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Reflex](https://img.shields.io/badge/Frontend-Reflex-5E5ADB?style=for-the-badge&logo=python&logoColor=white)](https://reflex.dev/)
@@ -50,7 +50,7 @@ classDiagram
         +DateTime played_at
     }
     User "1" -- "0..*" MatchHistory : participates
-🛠 Technologies UsedLayerTechnologyFrontendReflex (React-based UI in Python)BackendFastAPI (Asynchronous Server)DatabaseSQLModel / SQLAlchemy (SQLite)SecurityBCrypt Password HashingTestingPytest🔌 API DocumentationThe backend exposes a RESTful API and WebSocket-style state management.User Endpoints (REST)POST /auth/registerUsage: Registers a new user.Payload: {"username": "player1", "password": "securepassword"}POST /auth/loginUsage: Authenticates user and creates session.GET /users/meUsage: Fetches the current logged-in user's stats and ranking.Game Logic (WebSockets/State)State.find_match initiates the matchmaking queue.State.handle_click calculates reaction time and updates the DB via the FastAPI engine.🚀 Installation & SetupClone the repositoryBashgit clone [https://github.com/yourusername/reflex-clash.git](https://github.com/yourusername/reflex-clash.git)
+🛠 Technologies UsedLayerTechnologyFrontendReflex (React-based UI in Python)BackendFastAPI (Asynchronous Server)DatabaseSQLModel / SQLAlchemy (SQLite)SecurityBCrypt Password HashingTestingPytest🔌 API DocumentationThe backend exposes a RESTful API and WebSocket-style state management.User Endpoints (REST)POST /auth/registerUsage: Registers a new user.Payload: {"username": "player1", "password": "securepassword"}POST /auth/loginUsage: Authenticates user and creates session.GET /users/meUsage: Fetches the current logged-in user's stats and ranking.Game Logic (WebSockets/State)State.find_match initiates the matchmaking queue.State.handle_click calculates reaction time and updates the DB via the FastAPI engine.🚀 Installation & SetupClone the repositoryBashgit clone [https://github.com/xvyeh/reflex-clash.git](https://github.com/xvyeh/reflex-clash.git)
 cd reflex-clash
 
 
