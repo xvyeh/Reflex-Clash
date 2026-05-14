@@ -32,7 +32,7 @@ Markdown# 🎯 Reflex Clash: 1v1 Reaction Arena
 ### Database Schema (UML)
 The database utilizes a relational structure to manage users and match history.
 
-```mermaid
+```
 classDiagram
     class User {
         +Integer id
