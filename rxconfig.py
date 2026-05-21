@@ -2,5 +2,10 @@ import reflex as rx
 
 config = rx.Config(
     app_name="reflex_clash",
-    db_url="sqlite:///reflex.db",
+    # Use this format for SQLite in production
+    db_url="sqlite:///reflex.db", 
+    plugins=[
+        rx.plugins.RadixThemesPlugin(),
+        rx.plugins.SitemapPlugin(),
+    ],
 )
