@@ -32,12 +32,17 @@ class ActiveMatch(rx.Model, table=True):
     target_time: float = 0.0
     winner_id: Optional[int] = None
 
-# --- State Management ---
 class AuthState(rx.State):
     username: str = ""
     password: str = ""
     current_user: Optional[User] = None
     error: str = ""
+
+    def set_username(self, value: str):
+        self.username = value
+
+    def set_password(self, value: str):
+        self.password = value
 
     def register(self):
         with rx.session() as session:
@@ -73,11 +78,12 @@ class GameState(AuthState):
     box_color: str = "gray"
     reaction_time: str = ""
 
-    @rx.background
+    @rx.event(background=True)
     async def find_match(self):
         async with self:
             if not self.current_user:
-                return rx.redirect("/")
+                yield rx.redirect("/")   # <--- Use 'yield' instead of 'return'
+                return
             
             with rx.session() as session:
                 # 1. Look for an open match
@@ -197,7 +203,7 @@ def index():
                 ),
                 rx.tabs.content(
                     rx.vstack(
-                        rx.input(placeholder="Username", on_change=AuthState.set_username),
+                        rx.input(placeholder="Username", on_change=AuthState.set_username), # FIXED
                         rx.input(placeholder="Password", type="password", on_change=AuthState.set_password),
                         rx.button("Login", on_click=AuthState.login, width="100%"),
                         rx.text(AuthState.error, color="red"),
@@ -227,10 +233,12 @@ def dashboard():
     return rx.center(
         rx.vstack(
             rx.heading(f"Welcome, {AuthState.current_user.username}!"),
+            # Replaced rx.stat with standard vstack layouts
             rx.hstack(
-                rx.stat(rx.stat_label("Rank"), rx.stat_number(AuthState.current_user.rank_score)),
-                rx.stat(rx.stat_label("Wins"), rx.stat_number(AuthState.current_user.wins)),
-                rx.stat(rx.stat_label("Losses"), rx.stat_number(AuthState.current_user.losses)),
+                rx.vstack(rx.text("Rank", weight="bold"), rx.text(AuthState.current_user.rank_score)),
+                rx.vstack(rx.text("Wins", weight="bold"), rx.text(AuthState.current_user.wins)),
+                rx.vstack(rx.text("Losses", weight="bold"), rx.text(AuthState.current_user.losses)),
+                spacing="6",
             ),
             rx.button("Find Match ⚔️", size="4", color_scheme="red", on_click=GameState.find_match),
             rx.button("Logout", variant="ghost", on_click=AuthState.logout),
